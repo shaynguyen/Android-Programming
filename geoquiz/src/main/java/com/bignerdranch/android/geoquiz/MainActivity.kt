@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 
 private const val TAG = "MainActivity"
+private const val KEY_INDEX = "index"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var trueButton: Button
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        quizViewModel.currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
 
         questionTextView = findViewById(R.id.question_text_view)
         trueButton = findViewById(R.id.true_button)
@@ -77,16 +80,21 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onDestroy")
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
+    }
+
     private fun updateQuestion() {
         val questionResId = quizViewModel.currentQuestionText
         questionTextView.setText(questionResId)
     }
 
     private fun checkAnswer(userAnswer: Boolean) {
-        if(userAnswer == quizViewModel.currentQuestionAnswer) {
+        if (userAnswer == quizViewModel.currentQuestionAnswer) {
             Toast.makeText(this, R.string.correct_toast, Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_SHORT) .show()
+            Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show()
         }
     }
 }
