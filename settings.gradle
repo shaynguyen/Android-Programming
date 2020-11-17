@@ -1,0 +1,4 @@
+include ':cat'
+include ':dog'
+include ':app'
+rootProject.name = "Android-Programming"
