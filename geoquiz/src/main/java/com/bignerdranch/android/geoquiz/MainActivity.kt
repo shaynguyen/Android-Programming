@@ -17,25 +17,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var nextButton: Button
     private lateinit var questionTextView: TextView
 
-    private val questionBank = listOf(
-        Question(R.string.question_australia, true),
-        Question(R.string.question_oceans, true),
-        Question(R.string.question_mideast, false),
-        Question(R.string.question_africa, false),
-        Question(R.string.question_americas, true),
-        Question(R.string.question_asia, true)
-    )
-
-    private var currentIndex = 0
+    /* why by lazy?
+    * 1) assignment won't happen until the first time you access quizViewModel (in onCreate)
+    * 2) cannot safely access ViewModel until onCreate
+    * 3) can use val instead of var, quizViewModel won't be reassign
+    */
+    private val quizViewModel by lazy {
+        ViewModelProviders.of(this).get(QuizViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        Log.d(TAG, "onCreated")
-        val viewModelProvider = ViewModelProviders.of(this)
-        val quizViewModel = viewModelProvider.get(QuizViewModel::class.java)
-        Log.d(TAG, "Got a QuizViewModel: $quizViewModel")
 
         questionTextView = findViewById(R.id.question_text_view)
         trueButton = findViewById(R.id.true_button)
@@ -51,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         nextButton.setOnClickListener { view: View ->
-            currentIndex = (currentIndex + 1) % questionBank.size
+            quizViewModel.moveToNext()
             updateQuestion()
         }
 
@@ -85,12 +78,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateQuestion() {
-        val questionResId = questionBank[currentIndex].textResId
+        val questionResId = quizViewModel.currentQuestionText
         questionTextView.setText(questionResId)
     }
 
     private fun checkAnswer(userAnswer: Boolean) {
-        if(userAnswer == questionBank[currentIndex].answer) {
+        if(userAnswer == quizViewModel.currentQuestionAnswer) {
             Toast.makeText(this, R.string.correct_toast, Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_SHORT) .show()
