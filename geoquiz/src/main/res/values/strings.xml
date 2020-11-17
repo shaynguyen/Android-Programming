@@ -5,6 +5,11 @@
     <string name="true_button">True</string>
     <string name="false_button">False</string>
     <string name="next_button">Next</string>
+    <string name="prev_button">Prev</string>
+
+    <!-- image button -->
+    <string name="right_arrow">right arrow</string>
+    <string name="left_arrow">left arrow</string>
 
     <!-- toast -->
     <string name="correct_toast">Correct!</string>
@@ -17,4 +22,6 @@
     <string name="question_africa">The source of the Nile River is in Egypt.</string>
     <string name="question_americas">The Amazon River is the longest river in the Americas.</string>
     <string name="question_asia">Lake Baikal is the world\'s oldest and deepest freshwater lake.</string>
+
+
 </resources>

@@ -36,13 +36,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <Button
+        <ImageButton
+            android:id="@+id/prev_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/left_arrow"
+            android:drawablePadding="4dp"
+            android:src="@drawable/arrow_left" />
+
+        <ImageButton
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/arrow_right"
+            android:contentDescription="@string/right_arrow"
             android:drawablePadding="4dp"
-            android:text="@string/next_button" />
+            android:src="@drawable/arrow_right" />
     </LinearLayout>
 
 </LinearLayout>
