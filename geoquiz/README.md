@@ -9,3 +9,10 @@ A simple true/false quiz
 * recreate this layout below
 [example](01.1.png)
 
+### Wiring up Widgets
+* Wired up the UI you created previously
+* Clicking on the true/false button show display a toast
+
+### Challenges
+all challenges are on a seperate branch
+* display toast on top of the screen instead of the bottom
