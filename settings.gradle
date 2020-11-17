@@ -1,3 +1,4 @@
+include ':geoquiz'
 include ':cat'
 include ':dog'
 include ':app'
