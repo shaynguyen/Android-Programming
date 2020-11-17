@@ -6,8 +6,7 @@ A simple true/false quiz
 ### Create a new project
 
 ### Laying out the UI
-* recreate this layout below
-[example](01.1.png)
+* recreate this [example](01-1.png)
 
 ### Wiring up Widgets
 * Wired up the UI you created previously
