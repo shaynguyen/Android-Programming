@@ -66,3 +66,18 @@ challenges are on a seperate branch
 challenges are on a seperate branch
 * prevent repeated answers
 * grade quiz on complete
+
+## 4: Persisting UI State
+* add dependency to use ViewModel
+    * `` androidx.lifecycle:lifecycle-extensions:2.0.0 ``
+* persisting data through configuation with ViewModel
+    * create a QuizViewModel
+        * log its lifeCycles
+    * add QuizViewModel to MainActivity
+        * log it
+    * observe the logs on rotation of app
+    * migrate Quiz logic to QuizViewModel
+* persisting data through process death with save instance state
+    * ensure that this work by turning on "don't keep activities"
+    * hit the home button, reopen the app through your list.
+        * the data should persist
