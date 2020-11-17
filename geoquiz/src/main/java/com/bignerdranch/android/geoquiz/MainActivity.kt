@@ -40,15 +40,20 @@ class MainActivity : AppCompatActivity() {
 
         trueButton.setOnClickListener { view: View ->
             checkAnswer(true)
+            updateAnswerButtonState()
+            displayGradeOnComplete()
         }
 
         falseButton.setOnClickListener { view: View ->
             checkAnswer(false)
+            updateAnswerButtonState()
+            displayGradeOnComplete()
         }
 
         nextButton.setOnClickListener { view: View ->
             currentIndex = (currentIndex + 1) % questionBank.size
             updateQuestion()
+            updateAnswerButtonState()
         }
 
         updateQuestion()
@@ -86,10 +91,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAnswer(userAnswer: Boolean) {
-        if(userAnswer == questionBank[currentIndex].answer) {
+        if (userAnswer == questionBank[currentIndex].answer) {
             Toast.makeText(this, R.string.correct_toast, Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_SHORT) .show()
+            Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show()
         }
+
+        recordAnswer(userAnswer)
+    }
+
+    private fun recordAnswer(userAnswer: Boolean) {
+        questionBank[currentIndex].userAnswer = userAnswer
+    }
+
+
+    private fun updateAnswerButtonState() {
+        trueButton.isEnabled = questionBank[currentIndex].userAnswer == null
+        falseButton.isEnabled = questionBank[currentIndex].userAnswer == null
+    }
+
+    private fun displayGradeOnComplete() {
+        if (isQuizComplete()) {
+            displayGradeToast()
+            nextButton.isEnabled = false
+        }
+    }
+
+    private fun isQuizComplete(): Boolean {
+        return questionBank.all { question -> question.userAnswer != null }
+    }
+
+    private fun displayGradeToast() {
+        val score = questionBank.filter { question ->
+            question.answer == question.userAnswer
+        }.count()
+
+        val result = "Score: $score / ${questionBank.size}"
+        questionTextView.text = result
     }
 }
