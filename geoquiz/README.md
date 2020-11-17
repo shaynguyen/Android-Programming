@@ -55,3 +55,14 @@ challenges are on a seperate branch
 * clicking on the text should navigate to the next question
 * add a previous button
 * change the next/prev button to a image button, no text
+
+
+## 3: The Activity Lifecycle
+* log the activity lifecycles
+* create a landscape layout of activity_main
+![example](03-1.png)
+
+### Challenges
+challenges are on a seperate branch
+* prevent repeated answers
+* grade quiz on complete
