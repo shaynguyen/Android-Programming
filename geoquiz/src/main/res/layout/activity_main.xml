@@ -34,7 +34,8 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/next_button"
@@ -43,6 +44,14 @@
             android:drawableEnd="@drawable/arrow_right"
             android:drawablePadding="4dp"
             android:text="@string/next_button" />
+
+        <Button
+            android:id="@+id/cheat_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/cheat_button" />
+
     </LinearLayout>
 
 </LinearLayout>
