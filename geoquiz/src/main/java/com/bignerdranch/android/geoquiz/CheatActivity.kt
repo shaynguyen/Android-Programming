@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 
+private const val KEY_CHEATED = "cheated"
 private const val EXTRA_ANSWER_IS_TRUE =
     "com.bignerdranch.android.geoquiz.answer_is_true"
 const val EXTRA_ANSWER_SHOWN =
@@ -18,10 +19,16 @@ class CheatActivity : AppCompatActivity() {
     private lateinit var showAnswerButton: Button
 
     private var answerIsTrue = false
+    private var hasCheated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cheat)
+
+        hasCheated = savedInstanceState?.getBoolean(KEY_CHEATED, false) ?: false
+        if (hasCheated) {
+            setAnswerShownResult(true)
+        }
 
         answerIsTrue = intent.getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false)
         answerTextView = findViewById(R.id.answer_text_view)
@@ -32,10 +39,22 @@ class CheatActivity : AppCompatActivity() {
                 answerIsTrue -> R.string.correct_toast
                 else -> R.string.incorrect_toast
             }
+
+            hasCheated = true
             answerTextView.setText(answerText)
             setAnswerShownResult(true)
+            setAnswerShownResult(hasCheated)
         }
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(KEY_CHEATED, hasCheated)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        setAnswerShownResult(hasCheated)
     }
 
     companion object {
