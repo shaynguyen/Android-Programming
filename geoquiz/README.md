@@ -81,3 +81,32 @@ challenges are on a seperate branch
     * ensure that this work by turning on "don't keep activities"
     * hit the home button, reopen the app through your list.
         * the data should persist
+
+
+## 6: Your Second Activity
+* create a new activity using the activity wizard
+    * CheatActivity
+* layout the activity_cheat layout
+    * text field for the warning
+    * text field for the answer
+    * a cheat button
+* add the cheat button to main activity
+    * don't forgt about the land-scape layout!
+    * start cheatActivity on Click
+    * clicking on the cheat button will start the cheat activity
+* cheat activity
+    * wire up the necessary widgets
+    * impl a show answer button
+* cheat activity commuicate with the main activity if the uesr cheats
+    * shame the user for cheating
+
+### Examples
+![1](06-1.png)
+![2](06-2.png)
+![3](06-3.png)
+![4](06-4.png)
+
+### Challenges
+challenges are on a seperate branch
+* cheater can still cheat if they rotate the add. fix this!
+* only shame the user for the question they cheated on
