@@ -1,5 +1,6 @@
 package com.bignerdranch.android.geoquiz
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 
 private const val TAG = "MainActivity"
 private const val KEY_INDEX = "index"
+private const val REQUEST_CODE_CHEAT = 0
 
 class MainActivity : AppCompatActivity() {
     private lateinit var trueButton: Button
@@ -57,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         cheatButton.setOnClickListener {
             val answerIsTrue = quizViewModel.currentQuestionAnswer
             val intent = CheatActivity.newIntent(this, answerIsTrue)
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_CODE_CHEAT)
         }
 
         updateQuestion()
@@ -94,16 +96,32 @@ class MainActivity : AppCompatActivity() {
         outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode != Activity.RESULT_OK) {
+            return
+        }
+
+        if (requestCode === REQUEST_CODE_CHEAT) {
+            quizViewModel.isCheater =
+                data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+        }
+    }
+
     private fun updateQuestion() {
         val questionResId = quizViewModel.currentQuestionText
         questionTextView.setText(questionResId)
     }
 
     private fun checkAnswer(userAnswer: Boolean) {
-        if (userAnswer == quizViewModel.currentQuestionAnswer) {
-            Toast.makeText(this, R.string.correct_toast, Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show()
+        val messageResId = when {
+            quizViewModel.isCheater -> R.string.judgment_toast
+            userAnswer == quizViewModel.currentQuestionAnswer -> R.string.correct_toast
+            else -> R.string.incorrect_toast
         }
+
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
+            .show()
     }
 }

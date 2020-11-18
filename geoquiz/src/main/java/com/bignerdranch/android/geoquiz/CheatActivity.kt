@@ -1,5 +1,6 @@
 package com.bignerdranch.android.geoquiz
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,8 @@ import android.widget.TextView
 
 private const val EXTRA_ANSWER_IS_TRUE =
     "com.bignerdranch.android.geoquiz.answer_is_true"
+const val EXTRA_ANSWER_SHOWN =
+    "com.bignerdranch.android.geoquiz.answer_is_shown"
 
 class CheatActivity : AppCompatActivity() {
     private lateinit var answerTextView: TextView
@@ -30,6 +33,7 @@ class CheatActivity : AppCompatActivity() {
                 else -> R.string.incorrect_toast
             }
             answerTextView.setText(answerText)
+            setAnswerShownResult(true)
         }
 
     }
@@ -41,5 +45,12 @@ class CheatActivity : AppCompatActivity() {
                     putExtra(EXTRA_ANSWER_IS_TRUE, answerIsTrue)
                 }
         }
+    }
+
+    private fun setAnswerShownResult(isAnswerShown: Boolean) {
+        val data = Intent().apply {
+            putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown)
+        }
+        setResult(Activity.RESULT_OK, data)
     }
 }
